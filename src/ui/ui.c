@@ -115,6 +115,29 @@ void ui_event_kenyaPanel(lv_event_t *e);
 lv_obj_t *ui_kenyaPanel;
 lv_obj_t *ui_kenyaIcon;
 lv_obj_t *ui_kenyaText;
+void ui_event_shiftSwitch(lv_event_t *e);
+lv_obj_t *ui_shiftSwitch;
+void ui_event_shiftMode(lv_event_t *e);
+lv_obj_t *ui_shiftModeSelect;
+void ui_event_shiftBlinkRpm(lv_event_t *e);
+lv_obj_t *ui_shiftBlinkRpmSlider;
+lv_obj_t *ui_shiftBlinkRpmLabel;
+lv_obj_t *ui_shiftBlinkLabel;
+void ui_event_shiftFixedRpm(lv_event_t *e);
+lv_obj_t *ui_shiftFixedRpmSlider;
+lv_obj_t *ui_shiftFixedRpmLabel;
+lv_obj_t *ui_shiftPanel;
+lv_obj_t *ui_shiftModeLabel;
+void ui_event_ledCount(lv_event_t *e);
+lv_obj_t *ui_ledCountSlider;
+lv_obj_t *ui_ledCountLabel;
+void ui_event_ledMaxRpm(lv_event_t *e);
+lv_obj_t *ui_ledMaxRpmSlider;
+lv_obj_t *ui_ledMaxRpmLabel;
+void ui_event_ledTest(lv_event_t *e);
+lv_obj_t *ui_ledTestBtn;
+lv_obj_t *ui_ledTestLabel;
+lv_obj_t *ui_ledPanel;
 void ui_event_controlScreen(lv_event_t *e);
 lv_obj_t *ui_controlScreen;
 lv_obj_t *ui_controlTitle;
@@ -1077,6 +1100,111 @@ void ui_event_kenyaPanel(lv_event_t *e)
       if (event_code == LV_EVENT_CLICKED)
       {
             _ui_screen_change(ui_logoScreen, LV_SCR_LOAD_ANIM_FADE_ON, 500, 0);
+      }
+}
+
+void ui_event_shiftSwitch(lv_event_t *e)
+{
+      lv_disp_t *display = lv_display_get_default();
+      lv_obj_t *actScr = lv_display_get_screen_active(display);
+      if (actScr != ui_settingsScreen)
+      {
+            return;
+      }
+      lv_event_code_t event_code = lv_event_get_code(e);
+      if (event_code == LV_EVENT_VALUE_CHANGED)
+      {
+            onShiftSwitch(e);
+      }
+}
+
+void ui_event_shiftMode(lv_event_t *e)
+{
+      lv_disp_t *display = lv_display_get_default();
+      lv_obj_t *actScr = lv_display_get_screen_active(display);
+      if (actScr != ui_settingsScreen)
+      {
+            return;
+      }
+      lv_event_code_t event_code = lv_event_get_code(e);
+      if (event_code == LV_EVENT_VALUE_CHANGED)
+      {
+            onShiftMode(e);
+      }
+}
+
+void ui_event_shiftBlinkRpm(lv_event_t *e)
+{
+      lv_disp_t *display = lv_display_get_default();
+      lv_obj_t *actScr = lv_display_get_screen_active(display);
+      if (actScr != ui_settingsScreen)
+      {
+            return;
+      }
+      lv_event_code_t event_code = lv_event_get_code(e);
+      if (event_code == LV_EVENT_VALUE_CHANGED)
+      {
+            onShiftBlinkRpm(e);
+      }
+}
+
+void ui_event_shiftFixedRpm(lv_event_t *e)
+{
+      lv_disp_t *display = lv_display_get_default();
+      lv_obj_t *actScr = lv_display_get_screen_active(display);
+      if (actScr != ui_settingsScreen)
+      {
+            return;
+      }
+      lv_event_code_t event_code = lv_event_get_code(e);
+      if (event_code == LV_EVENT_VALUE_CHANGED)
+      {
+            onShiftFixedRpm(e);
+      }
+}
+
+void ui_event_ledCount(lv_event_t *e)
+{
+      lv_disp_t *display = lv_display_get_default();
+      lv_obj_t *actScr = lv_display_get_screen_active(display);
+      if (actScr != ui_settingsScreen)
+      {
+            return;
+      }
+      lv_event_code_t event_code = lv_event_get_code(e);
+      if (event_code == LV_EVENT_VALUE_CHANGED)
+      {
+            onLedCount(e);
+      }
+}
+
+void ui_event_ledMaxRpm(lv_event_t *e)
+{
+      lv_disp_t *display = lv_display_get_default();
+      lv_obj_t *actScr = lv_display_get_screen_active(display);
+      if (actScr != ui_settingsScreen)
+      {
+            return;
+      }
+      lv_event_code_t event_code = lv_event_get_code(e);
+      if (event_code == LV_EVENT_VALUE_CHANGED)
+      {
+            onLedMaxRpm(e);
+      }
+}
+
+void ui_event_ledTest(lv_event_t *e)
+{
+      lv_disp_t *display = lv_display_get_default();
+      lv_obj_t *actScr = lv_display_get_screen_active(display);
+      if (actScr != ui_settingsScreen)
+      {
+            return;
+      }
+      lv_event_code_t event_code = lv_event_get_code(e);
+      if (event_code == LV_EVENT_CLICKED)
+      {
+            onLedTest(e);
       }
 }
 
@@ -3372,8 +3500,150 @@ void ui_settingsScreen_screen_init(void)
       // lv_label_set_recolor(ui_kenyaText, true);
       lv_label_set_text(ui_kenyaText, "Made with love\nin Kenya\nusing LVGL");
 
+      ui_shiftPanel = lv_obj_create(ui_settingsList);
+      lv_obj_set_width(ui_shiftPanel, 200);
+      lv_obj_set_height(ui_shiftPanel, 140);
+      lv_obj_set_align(ui_shiftPanel, LV_ALIGN_CENTER);
+      lv_obj_remove_flag(ui_shiftPanel, LV_OBJ_FLAG_SCROLLABLE);
+      lv_obj_set_style_radius(ui_shiftPanel, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+      lv_obj_set_style_bg_color(ui_shiftPanel, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
+      lv_obj_set_style_bg_opa(ui_shiftPanel, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+      lv_obj_set_style_border_color(ui_shiftPanel, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
+      lv_obj_set_style_border_opa(ui_shiftPanel, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+      lv_obj_set_style_border_width(ui_shiftPanel, 1, LV_PART_MAIN | LV_STATE_DEFAULT);
+      lv_obj_set_style_border_side(ui_shiftPanel, LV_BORDER_SIDE_BOTTOM, LV_PART_MAIN | LV_STATE_DEFAULT);
+      lv_obj_set_style_pad_left(ui_shiftPanel, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+      lv_obj_set_style_pad_right(ui_shiftPanel, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+      lv_obj_set_style_pad_top(ui_shiftPanel, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+      lv_obj_set_style_pad_bottom(ui_shiftPanel, 5, LV_PART_MAIN | LV_STATE_DEFAULT);
+
+      ui_shiftSwitch = lv_switch_create(ui_shiftPanel);
+      lv_obj_set_width(ui_shiftSwitch, 50);
+      lv_obj_set_height(ui_shiftSwitch, 25);
+      lv_obj_set_x(ui_shiftSwitch, -60);
+      lv_obj_set_y(ui_shiftSwitch, -40);
+      lv_obj_add_flag(ui_shiftSwitch, LV_OBJ_FLAG_GESTURE_BUBBLE);
+
+      ui_shiftBlinkLabel = lv_label_create(ui_shiftPanel);
+      lv_obj_set_width(ui_shiftBlinkLabel, LV_SIZE_CONTENT);
+      lv_obj_set_height(ui_shiftBlinkLabel, LV_SIZE_CONTENT);
+      lv_obj_set_x(ui_shiftBlinkLabel, 40);
+      lv_obj_set_y(ui_shiftBlinkLabel, -45);
+      lv_label_set_text(ui_shiftBlinkLabel, "Shift Light");
+
+      ui_shiftModeLabel = lv_label_create(ui_shiftPanel);
+      lv_obj_set_width(ui_shiftModeLabel, LV_SIZE_CONTENT);
+      lv_obj_set_height(ui_shiftModeLabel, LV_SIZE_CONTENT);
+      lv_obj_set_x(ui_shiftModeLabel, -80);
+      lv_obj_set_y(ui_shiftModeLabel, -5);
+      lv_label_set_text(ui_shiftModeLabel, "Mode:");
+
+      ui_shiftModeSelect = lv_dropdown_create(ui_shiftPanel);
+      lv_dropdown_set_options(ui_shiftModeSelect, "Blink\nFixed");
+      lv_dropdown_set_selected(ui_shiftModeSelect, 0);
+      lv_obj_set_width(ui_shiftModeSelect, 80);
+      lv_obj_set_height(ui_shiftModeSelect, LV_SIZE_CONTENT);
+      lv_obj_set_x(ui_shiftModeSelect, 30);
+      lv_obj_set_y(ui_shiftModeSelect, -5);
+
+      ui_shiftBlinkRpmLabel = lv_label_create(ui_shiftPanel);
+      lv_obj_set_width(ui_shiftBlinkRpmLabel, LV_SIZE_CONTENT);
+      lv_obj_set_height(ui_shiftBlinkRpmLabel, LV_SIZE_CONTENT);
+      lv_obj_set_x(ui_shiftBlinkRpmLabel, -80);
+      lv_obj_set_y(ui_shiftBlinkRpmLabel, 25);
+      lv_label_set_text(ui_shiftBlinkRpmLabel, "Blink RPM:");
+
+      ui_shiftBlinkRpmSlider = lv_slider_create(ui_shiftPanel);
+      lv_slider_set_range(ui_shiftBlinkRpmSlider, 1000, 8000);
+      lv_slider_set_value(ui_shiftBlinkRpmSlider, 4500, LV_ANIM_OFF);
+      lv_obj_set_width(ui_shiftBlinkRpmSlider, 100);
+      lv_obj_set_height(ui_shiftBlinkRpmSlider, 10);
+      lv_obj_set_x(ui_shiftBlinkRpmSlider, 30);
+      lv_obj_set_y(ui_shiftBlinkRpmSlider, 25);
+
+      ui_shiftFixedRpmLabel = lv_label_create(ui_shiftPanel);
+      lv_obj_set_width(ui_shiftFixedRpmLabel, LV_SIZE_CONTENT);
+      lv_obj_set_height(ui_shiftFixedRpmLabel, LV_SIZE_CONTENT);
+      lv_obj_set_x(ui_shiftFixedRpmLabel, -80);
+      lv_obj_set_y(ui_shiftFixedRpmLabel, 50);
+      lv_label_set_text(ui_shiftFixedRpmLabel, "Fixed RPM:");
+
+      ui_shiftFixedRpmSlider = lv_slider_create(ui_shiftPanel);
+      lv_slider_set_range(ui_shiftFixedRpmSlider, 1000, 8000);
+      lv_slider_set_value(ui_shiftFixedRpmSlider, 6000, LV_ANIM_OFF);
+      lv_obj_set_width(ui_shiftFixedRpmSlider, 100);
+      lv_obj_set_height(ui_shiftFixedRpmSlider, 10);
+      lv_obj_set_x(ui_shiftFixedRpmSlider, 30);
+      lv_obj_set_y(ui_shiftFixedRpmSlider, 50);
+
+      ui_ledPanel = lv_obj_create(ui_settingsList);
+      lv_obj_set_width(ui_ledPanel, 200);
+      lv_obj_set_height(ui_ledPanel, 110);
+      lv_obj_set_align(ui_ledPanel, LV_ALIGN_CENTER);
+      lv_obj_remove_flag(ui_ledPanel, LV_OBJ_FLAG_SCROLLABLE);
+      lv_obj_set_style_radius(ui_ledPanel, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+      lv_obj_set_style_bg_color(ui_ledPanel, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
+      lv_obj_set_style_bg_opa(ui_ledPanel, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+      lv_obj_set_style_border_color(ui_ledPanel, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
+      lv_obj_set_style_border_opa(ui_ledPanel, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+      lv_obj_set_style_border_width(ui_ledPanel, 1, LV_PART_MAIN | LV_STATE_DEFAULT);
+      lv_obj_set_style_border_side(ui_ledPanel, LV_BORDER_SIDE_BOTTOM, LV_PART_MAIN | LV_STATE_DEFAULT);
+      lv_obj_set_style_pad_left(ui_ledPanel, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+      lv_obj_set_style_pad_right(ui_ledPanel, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+      lv_obj_set_style_pad_top(ui_ledPanel, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+      lv_obj_set_style_pad_bottom(ui_ledPanel, 5, LV_PART_MAIN | LV_STATE_DEFAULT);
+
+      ui_ledCountLabel = lv_label_create(ui_ledPanel);
+      lv_obj_set_width(ui_ledCountLabel, LV_SIZE_CONTENT);
+      lv_obj_set_height(ui_ledCountLabel, LV_SIZE_CONTENT);
+      lv_obj_set_x(ui_ledCountLabel, -80);
+      lv_obj_set_y(ui_ledCountLabel, -35);
+      lv_label_set_text(ui_ledCountLabel, "LED Count:");
+
+      ui_ledCountSlider = lv_slider_create(ui_ledPanel);
+      lv_slider_set_range(ui_ledCountSlider, 1, 10);
+      lv_slider_set_value(ui_ledCountSlider, 10, LV_ANIM_OFF);
+      lv_obj_set_width(ui_ledCountSlider, 100);
+      lv_obj_set_height(ui_ledCountSlider, 10);
+      lv_obj_set_x(ui_ledCountSlider, 30);
+      lv_obj_set_y(ui_ledCountSlider, -35);
+
+      ui_ledMaxRpmLabel = lv_label_create(ui_ledPanel);
+      lv_obj_set_width(ui_ledMaxRpmLabel, LV_SIZE_CONTENT);
+      lv_obj_set_height(ui_ledMaxRpmLabel, LV_SIZE_CONTENT);
+      lv_obj_set_x(ui_ledMaxRpmLabel, -80);
+      lv_obj_set_y(ui_ledMaxRpmLabel, -10);
+      lv_label_set_text(ui_ledMaxRpmLabel, "Max RPM:");
+
+      ui_ledMaxRpmSlider = lv_slider_create(ui_ledPanel);
+      lv_slider_set_range(ui_ledMaxRpmSlider, 2000, 12000);
+      lv_slider_set_value(ui_ledMaxRpmSlider, 8000, LV_ANIM_OFF);
+      lv_obj_set_width(ui_ledMaxRpmSlider, 100);
+      lv_obj_set_height(ui_ledMaxRpmSlider, 10);
+      lv_obj_set_x(ui_ledMaxRpmSlider, 30);
+      lv_obj_set_y(ui_ledMaxRpmSlider, -10);
+
+      ui_ledTestBtn = lv_button_create(ui_ledPanel);
+      lv_obj_set_width(ui_ledTestBtn, 80);
+      lv_obj_set_height(ui_ledTestBtn, 30);
+      lv_obj_set_x(ui_ledTestBtn, 0);
+      lv_obj_set_y(ui_ledTestBtn, 30);
+      lv_obj_set_style_bg_color(ui_ledTestBtn, lv_color_hex(0x008800), LV_PART_MAIN);
+      lv_obj_set_style_bg_opa(ui_ledTestBtn, 255, LV_PART_MAIN);
+
+      ui_ledTestLabel = lv_label_create(ui_ledTestBtn);
+      lv_label_set_text(ui_ledTestLabel, "Test LEDs");
+      lv_obj_center(ui_ledTestLabel);
+
       lv_obj_add_event_cb(ui_kenyaPanel, ui_event_kenyaPanel, LV_EVENT_ALL, NULL);
       lv_obj_add_event_cb(ui_aboutPanel, ui_event_aboutPanel, LV_EVENT_ALL, NULL);
+      lv_obj_add_event_cb(ui_shiftSwitch, ui_event_shiftSwitch, LV_EVENT_ALL, NULL);
+      lv_obj_add_event_cb(ui_shiftModeSelect, ui_event_shiftMode, LV_EVENT_ALL, NULL);
+      lv_obj_add_event_cb(ui_shiftBlinkRpmSlider, ui_event_shiftBlinkRpm, LV_EVENT_ALL, NULL);
+      lv_obj_add_event_cb(ui_shiftFixedRpmSlider, ui_event_shiftFixedRpm, LV_EVENT_ALL, NULL);
+      lv_obj_add_event_cb(ui_ledCountSlider, ui_event_ledCount, LV_EVENT_ALL, NULL);
+      lv_obj_add_event_cb(ui_ledMaxRpmSlider, ui_event_ledMaxRpm, LV_EVENT_ALL, NULL);
+      lv_obj_add_event_cb(ui_ledTestBtn, ui_event_ledTest, LV_EVENT_ALL, NULL);
 
       lv_obj_add_event_cb(ui_settingsList, onScroll, LV_EVENT_SCROLL, NULL);
       lv_obj_add_event_cb(ui_brightnessSlider, ui_event_brightnessSlider, LV_EVENT_ALL, NULL);

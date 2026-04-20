@@ -116,17 +116,32 @@ static const uint32_t screenHeight = SCREEN_HEIGHT;
 
 
 /*MIO*/
-#define RPM_PIN 4
+#define RPM_PIN 20
 
 static volatile uint32_t rpmPulseCount = 0;
 static volatile uint32_t lastRpmPulseMs = 0;
 static uint32_t lastRpmCalcMs = 0;
 static float currentRpm = 0.0f;
 static bool shiftOverlayEnabled = true;
-static uint16_t shiftRpmThreshold = 4500;
+static uint16_t shiftRpmThresholdBlink = 4500;
+static uint16_t shiftRpmThresholdFixed = 6000;
+static bool shiftBlinkMode = true;
+static bool shiftOverlayVisible = false;
+static uint32_t shiftBlinkLastToggle = 0;
 
 static lv_obj_t *shiftOverlay = nullptr;
 static lv_obj_t *shiftOverlayLabel = nullptr;
+
+#define MAX_LEDS 10
+static int numLeds = 10;
+static uint16_t maxRpm = 8000;
+static lv_obj_t *leds[MAX_LEDS];
+static int currentLedLevel = -1;
+static uint16_t *rpmLevels = nullptr;
+static bool ledTestMode = false;
+static uint32_t ledTestLastUpdate = 0;
+static int ledTestDirection = 1;
+static int ledTestCurrent = 0;
 
 void IRAM_ATTR rpmISR() {
     rpmPulseCount++;
@@ -340,14 +355,138 @@ void createShiftOverlay() {
     lv_obj_center(shiftOverlayLabel);
 }
 
+void calculateRpmLevels() {
+    if (rpmLevels != nullptr) {
+        free(rpmLevels);
+    }
+    rpmLevels = (uint16_t *)malloc(numLeds * sizeof(uint16_t));
+    if (rpmLevels == nullptr) return;
+    
+    uint16_t interval = maxRpm / numLeds;
+    for (int i = 0; i < numLeds; i++) {
+        rpmLevels[i] = (i + 1) * interval;
+    }
+}
+
+void createLedBar(lv_obj_t *screen) {
+    if (leds[0] != nullptr) return;
+
+    calculateRpmLevels();
+
+    int screenW = SCREEN_WIDTH;
+    int ledSize = 8;
+    int spacing = 3;
+    int totalWidth = numLeds * ledSize + (numLeds - 1) * spacing;
+    int startX = (screenW - totalWidth) / 2;
+    int yPos = 20;
+
+    for (int i = 0; i < numLeds; i++) {
+        leds[i] = lv_obj_create(screen);
+        lv_obj_remove_style_all(leds[i]);
+        lv_obj_set_size(leds[i], ledSize, ledSize);
+        lv_obj_set_pos(leds[i], startX + i * (ledSize + spacing), yPos);
+        lv_obj_set_style_radius(leds[i], 2, 0);
+        lv_obj_set_style_bg_color(leds[i], lv_color_hex(0x333333), 0);
+        lv_obj_set_style_bg_opa(leds[i], LV_OPA_100, 0);
+        lv_obj_add_flag(leds[i], LV_OBJ_FLAG_HIDDEN);
+    }
+}
+
+void runLedTestAnimation() {
+    ledTestMode = true;
+    ledTestCurrent = 0;
+    ledTestDirection = 1;
+    currentLedLevel = -1;
+    for (int i = 0; i < numLeds; i++) {
+        lv_obj_add_flag(leds[i], LV_OBJ_FLAG_HIDDEN);
+    }
+}
+
+void updateLedBar() {
+    if (leds[0] == nullptr || rpmLevels == nullptr) return;
+
+    if (ledTestMode) {
+        uint32_t now = millis();
+        if (now - ledTestLastUpdate >= 100) {
+            ledTestLastUpdate = now;
+            
+            for (int i = 0; i < numLeds; i++) {
+                lv_obj_add_flag(leds[i], LV_OBJ_FLAG_HIDDEN);
+            }
+            
+            if (ledTestCurrent >= 0 && ledTestCurrent < numLeds) {
+                lv_obj_remove_flag(leds[ledTestCurrent], LV_OBJ_FLAG_HIDDEN);
+                lv_obj_set_style_bg_color(leds[ledTestCurrent], lv_color_hex(0xFF0000), 0);
+            }
+            
+            ledTestCurrent += ledTestDirection;
+            
+            if (ledTestCurrent >= numLeds) {
+                ledTestDirection = -1;
+                ledTestCurrent = numLeds - 1;
+            } else if (ledTestCurrent < 0) {
+                ledTestMode = false;
+                for (int i = 0; i < numLeds; i++) {
+                    lv_obj_add_flag(leds[i], LV_OBJ_FLAG_HIDDEN);
+                }
+            }
+        }
+        return;
+    }
+
+    int newLevel = -1;
+    for (int i = 0; i < numLeds; i++) {
+        if (currentRpm >= rpmLevels[i]) {
+            newLevel = i;
+        }
+    }
+
+    if (newLevel != currentLedLevel) {
+        currentLedLevel = newLevel;
+        for (int i = 0; i < numLeds; i++) {
+            if (i < currentLedLevel) {
+                lv_obj_remove_flag(leds[i], LV_OBJ_FLAG_HIDDEN);
+                lv_obj_set_style_bg_color(leds[i], lv_color_hex(0x00FF00), 0);
+            } else if (i == currentLedLevel && currentLedLevel >= 0) {
+                lv_obj_remove_flag(leds[i], LV_OBJ_FLAG_HIDDEN);
+                lv_obj_set_style_bg_color(leds[i], lv_color_hex(0xFF0000), 0);
+            } else {
+                lv_obj_add_flag(leds[i], LV_OBJ_FLAG_HIDDEN);
+            }
+        }
+    }
+}
+
 void updateShiftOverlay() {
     if (shiftOverlay == nullptr) return;
 
-    if (shiftOverlayEnabled && currentRpm >= shiftRpmThreshold) {
-        lv_obj_remove_flag(shiftOverlay, LV_OBJ_FLAG_HIDDEN);
-        lv_obj_move_foreground(shiftOverlay);
-    } else {
+    if (!shiftOverlayEnabled || currentRpm < shiftRpmThresholdBlink) {
         lv_obj_add_flag(shiftOverlay, LV_OBJ_FLAG_HIDDEN);
+        shiftOverlayVisible = false;
+        return;
+    }
+
+    if (shiftBlinkMode) {
+        uint32_t now = millis();
+        if (now - shiftBlinkLastToggle >= 200) {
+            shiftBlinkLastToggle = now;
+            shiftOverlayVisible = !shiftOverlayVisible;
+            if (shiftOverlayVisible) {
+                lv_obj_remove_flag(shiftOverlay, LV_OBJ_FLAG_HIDDEN);
+                lv_obj_move_foreground(shiftOverlay);
+            } else {
+                lv_obj_add_flag(shiftOverlay, LV_OBJ_FLAG_HIDDEN);
+            }
+        }
+    } else {
+        if (currentRpm >= shiftRpmThresholdFixed) {
+            lv_obj_remove_flag(shiftOverlay, LV_OBJ_FLAG_HIDDEN);
+            lv_obj_move_foreground(shiftOverlay);
+            shiftOverlayVisible = true;
+        } else {
+            lv_obj_add_flag(shiftOverlay, LV_OBJ_FLAG_HIDDEN);
+            shiftOverlayVisible = false;
+        }
     }
 }
 /*MIO*/
@@ -1423,6 +1562,61 @@ void onBatteryChange(lv_event_t *e)
   watch.setBattery(lvl);
 }
 
+void onShiftSwitch(lv_event_t *e)
+{
+  bool state = lv_obj_has_state(ui_shiftSwitch, LV_STATE_CHECKED);
+  shiftOverlayEnabled = state;
+  prefs.putBool("shift_enabled", state);
+  if (!state && shiftOverlay != nullptr) {
+    lv_obj_add_flag(shiftOverlay, LV_OBJ_FLAG_HIDDEN);
+  }
+}
+
+void onShiftMode(lv_event_t *e)
+{
+  lv_obj_t *obj = (lv_obj_t *)lv_event_get_target(e);
+  uint16_t sel = lv_dropdown_get_selected(obj);
+  shiftBlinkMode = (sel == 0);
+  prefs.putBool("shift_blink", shiftBlinkMode);
+}
+
+void onShiftBlinkRpm(lv_event_t *e)
+{
+  uint16_t val = lv_slider_get_value(ui_shiftBlinkRpmSlider);
+  shiftRpmThresholdBlink = val;
+  prefs.putInt("shift_blink_rpm", val);
+}
+
+void onShiftFixedRpm(lv_event_t *e)
+{
+  uint16_t val = lv_slider_get_value(ui_shiftFixedRpmSlider);
+  shiftRpmThresholdFixed = val;
+  prefs.putInt("shift_fixed_rpm", val);
+}
+
+void onLedCount(lv_event_t *e)
+{
+  int val = lv_slider_get_value(ui_ledCountSlider);
+  numLeds = val;
+  prefs.putInt("led_count", val);
+  calculateRpmLevels();
+  currentLedLevel = -1;
+}
+
+void onLedMaxRpm(lv_event_t *e)
+{
+  int val = lv_slider_get_value(ui_ledMaxRpmSlider);
+  maxRpm = val;
+  prefs.putInt("led_max_rpm", val);
+  calculateRpmLevels();
+  currentLedLevel = -1;
+}
+
+void onLedTest(lv_event_t *e)
+{
+  runLedTestAnimation();
+}
+
 void onStartSearch(lv_event_t *e)
 {
   watch.findPhone(true);
@@ -1998,7 +2192,10 @@ void hal_setup()
   /*MIO*/
   pinMode(RPM_PIN, INPUT_PULLUP);
   attachInterrupt(digitalPinToInterrupt(RPM_PIN), rpmISR, FALLING);
+  calculateRpmLevels();
   createShiftOverlay();
+  createLedBar(ui_clockScreen);
+  runLedTestAnimation();
   /*MIO*/
 
 
@@ -2103,6 +2300,14 @@ void hal_setup()
   alertSwitch = prefs.getBool("alerts", false);
   navSwitch = prefs.getBool("autonav", false);
 
+  shiftOverlayEnabled = prefs.getBool("shift_enabled", true);
+  shiftBlinkMode = prefs.getBool("shift_blink", true);
+  shiftRpmThresholdBlink = prefs.getInt("shift_blink_rpm", 4500);
+  shiftRpmThresholdFixed = prefs.getInt("shift_fixed_rpm", 6000);
+
+  numLeds = prefs.getInt("led_count", 10);
+  maxRpm = prefs.getInt("led_max_rpm", 8000);
+
   lv_obj_scroll_to_y(ui_settingsList, 1, LV_ANIM_ON);
   lv_obj_scroll_to_y(ui_appList, 1, LV_ANIM_ON);
   lv_obj_scroll_to_y(ui_appInfoPanel, 1, LV_ANIM_ON);
@@ -2144,6 +2349,20 @@ void hal_setup()
     lv_obj_remove_state(ui_navStateSwitch, LV_STATE_CHECKED);
   }
 #endif
+
+  if (shiftOverlayEnabled)
+  {
+    lv_obj_add_state(ui_shiftSwitch, LV_STATE_CHECKED);
+  }
+  else
+  {
+    lv_obj_remove_state(ui_shiftSwitch, LV_STATE_CHECKED);
+  }
+  lv_dropdown_set_selected(ui_shiftModeSelect, shiftBlinkMode ? 0 : 1);
+  lv_slider_set_value(ui_shiftBlinkRpmSlider, shiftRpmThresholdBlink, LV_ANIM_OFF);
+  lv_slider_set_value(ui_shiftFixedRpmSlider, shiftRpmThresholdFixed, LV_ANIM_OFF);
+  lv_slider_set_value(ui_ledCountSlider, numLeds, LV_ANIM_OFF);
+  lv_slider_set_value(ui_ledMaxRpmSlider, maxRpm, LV_ANIM_OFF);
 
   screenTimer.active = true;
   screenTimer.time = millis();
@@ -2282,6 +2501,7 @@ void hal_loop()
   /*MIO*/
   updateRpm();
   updateShiftOverlay();
+  updateLedBar();
   /*MIO*/
 
   if (!transfer)

@@ -1,4 +1,4 @@
-.pio
+.pio/*
 !.pio/build/
 !.pio/build/lolin_c3_mini/
 !.pio/build/lolin_c3_mini/firmware.bin

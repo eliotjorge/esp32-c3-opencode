@@ -1,0 +1,31 @@
+.pio/build/lolin_c3_mini/libea8/lvgl/others/font_manager/lv_font_manager.c.o: \
+ .pio/libdeps/lolin_c3_mini/lvgl/src/others/font_manager/lv_font_manager.c \
+ .pio/libdeps/lolin_c3_mini/lvgl/src/others/font_manager/lv_font_manager.h \
+ c:\esp32-c3-mini\.pio\libdeps\lolin_c3_mini\lvgl\src\font\lv_font.h \
+ c:\esp32-c3-mini\.pio\libdeps\lolin_c3_mini\lvgl\src\lv_conf_internal.h \
+ c:\esp32-c3-mini\.pio\libdeps\lolin_c3_mini\lvgl\src\lv_conf_kconfig.h \
+ C:/Users/jorge/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32c3/qio_qspi/include/sdkconfig.h \
+ C:/Users/jorge/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32c3/include/esp_common/include/esp_attr.h \
+ C:/esp32-c3-mini/include/lv_conf.h \
+ c:\esp32-c3-mini\.pio\libdeps\lolin_c3_mini\lvgl\src\misc\lv_types.h \
+ c:\esp32-c3-mini\.pio\libdeps\lolin_c3_mini\lvgl\src\lv_conf_internal.h \
+ c:\esp32-c3-mini\.pio\libdeps\lolin_c3_mini\lvgl\src\font\lv_symbol_def.h \
+ c:\esp32-c3-mini\.pio\libdeps\lolin_c3_mini\lvgl\src\draw\lv_draw_buf.h \
+ c:\esp32-c3-mini\.pio\libdeps\lolin_c3_mini\lvgl\src\misc\lv_types.h \
+ c:\esp32-c3-mini\.pio\libdeps\lolin_c3_mini\lvgl\src\misc\lv_area.h \
+ c:\esp32-c3-mini\.pio\libdeps\lolin_c3_mini\lvgl\src\misc\lv_types.h \
+ c:\esp32-c3-mini\.pio\libdeps\lolin_c3_mini\lvgl\src\misc\lv_math.h \
+ c:\esp32-c3-mini\.pio\libdeps\lolin_c3_mini\lvgl\src\misc\lv_color.h \
+ c:\esp32-c3-mini\.pio\libdeps\lolin_c3_mini\lvgl\src\misc\lv_assert.h \
+ c:\esp32-c3-mini\.pio\libdeps\lolin_c3_mini\lvgl\src\misc\lv_log.h \
+ c:\esp32-c3-mini\.pio\libdeps\lolin_c3_mini\lvgl\src\stdlib\lv_mem.h \
+ c:\esp32-c3-mini\.pio\libdeps\lolin_c3_mini\lvgl\src\lv_conf_internal.h \
+ c:\esp32-c3-mini\.pio\libdeps\lolin_c3_mini\lvgl\src\stdlib\lv_string.h \
+ c:\esp32-c3-mini\.pio\libdeps\lolin_c3_mini\lvgl\src\misc\lv_types.h \
+ c:\esp32-c3-mini\.pio\libdeps\lolin_c3_mini\lvgl\src\misc\lv_palette.h \
+ c:\esp32-c3-mini\.pio\libdeps\lolin_c3_mini\lvgl\src\misc\lv_color.h \
+ c:\esp32-c3-mini\.pio\libdeps\lolin_c3_mini\lvgl\src\misc\lv_color_op.h \
+ c:\esp32-c3-mini\.pio\libdeps\lolin_c3_mini\lvgl\src\stdlib\lv_string.h \
+ c:\esp32-c3-mini\.pio\libdeps\lolin_c3_mini\lvgl\src\draw\lv_image_dsc.h \
+ c:\esp32-c3-mini\.pio\libdeps\lolin_c3_mini\lvgl\src\lv_conf_internal.h \
+ c:\esp32-c3-mini\.pio\libdeps\lolin_c3_mini\lvgl\src\misc\lv_area.h

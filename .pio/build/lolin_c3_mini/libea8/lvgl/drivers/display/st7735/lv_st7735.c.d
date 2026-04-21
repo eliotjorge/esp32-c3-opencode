@@ -1,0 +1,31 @@
+.pio/build/lolin_c3_mini/libea8/lvgl/drivers/display/st7735/lv_st7735.c.o: \
+ .pio/libdeps/lolin_c3_mini/lvgl/src/drivers/display/st7735/lv_st7735.c \
+ .pio/libdeps/lolin_c3_mini/lvgl/src/drivers/display/st7735/lv_st7735.h \
+ .pio/libdeps/lolin_c3_mini/lvgl/src/drivers/display/st7735/../lcd/lv_lcd_generic_mipi.h \
+ c:\esp32-c3-mini\.pio\libdeps\lolin_c3_mini\lvgl\src\display\lv_display.h \
+ c:\esp32-c3-mini\.pio\libdeps\lolin_c3_mini\lvgl\src\misc\lv_types.h \
+ c:\esp32-c3-mini\.pio\libdeps\lolin_c3_mini\lvgl\src\lv_conf_internal.h \
+ c:\esp32-c3-mini\.pio\libdeps\lolin_c3_mini\lvgl\src\lv_conf_kconfig.h \
+ C:/Users/jorge/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32c3/qio_qspi/include/sdkconfig.h \
+ C:/Users/jorge/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32c3/include/esp_common/include/esp_attr.h \
+ C:/esp32-c3-mini/include/lv_conf.h \
+ c:\esp32-c3-mini\.pio\libdeps\lolin_c3_mini\lvgl\src\misc\lv_timer.h \
+ c:\esp32-c3-mini\.pio\libdeps\lolin_c3_mini\lvgl\src\tick\lv_tick.h \
+ c:\esp32-c3-mini\.pio\libdeps\lolin_c3_mini\lvgl\src\lv_conf_internal.h \
+ c:\esp32-c3-mini\.pio\libdeps\lolin_c3_mini\lvgl\src\misc\lv_types.h \
+ c:\esp32-c3-mini\.pio\libdeps\lolin_c3_mini\lvgl\src\misc\lv_types.h \
+ c:\esp32-c3-mini\.pio\libdeps\lolin_c3_mini\lvgl\src\misc\lv_ll.h \
+ c:\esp32-c3-mini\.pio\libdeps\lolin_c3_mini\lvgl\src\misc\lv_event.h \
+ c:\esp32-c3-mini\.pio\libdeps\lolin_c3_mini\lvgl\src\misc\lv_array.h \
+ c:\esp32-c3-mini\.pio\libdeps\lolin_c3_mini\lvgl\src\misc\lv_color.h \
+ c:\esp32-c3-mini\.pio\libdeps\lolin_c3_mini\lvgl\src\misc\lv_assert.h \
+ c:\esp32-c3-mini\.pio\libdeps\lolin_c3_mini\lvgl\src\misc\lv_log.h \
+ c:\esp32-c3-mini\.pio\libdeps\lolin_c3_mini\lvgl\src\stdlib\lv_mem.h \
+ c:\esp32-c3-mini\.pio\libdeps\lolin_c3_mini\lvgl\src\lv_conf_internal.h \
+ c:\esp32-c3-mini\.pio\libdeps\lolin_c3_mini\lvgl\src\stdlib\lv_string.h \
+ c:\esp32-c3-mini\.pio\libdeps\lolin_c3_mini\lvgl\src\misc\lv_types.h \
+ c:\esp32-c3-mini\.pio\libdeps\lolin_c3_mini\lvgl\src\misc\lv_math.h \
+ c:\esp32-c3-mini\.pio\libdeps\lolin_c3_mini\lvgl\src\misc\lv_palette.h \
+ c:\esp32-c3-mini\.pio\libdeps\lolin_c3_mini\lvgl\src\misc\lv_color.h \
+ c:\esp32-c3-mini\.pio\libdeps\lolin_c3_mini\lvgl\src\misc\lv_color_op.h \
+ c:\esp32-c3-mini\.pio\libdeps\lolin_c3_mini\lvgl\src\misc\lv_area.h

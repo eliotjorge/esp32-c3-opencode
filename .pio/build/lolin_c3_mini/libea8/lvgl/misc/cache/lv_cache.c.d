@@ -1,0 +1,35 @@
+.pio/build/lolin_c3_mini/libea8/lvgl/misc/cache/lv_cache.c.o: \
+ .pio/libdeps/lolin_c3_mini/lvgl/src/misc/cache/lv_cache.c \
+ .pio/libdeps/lolin_c3_mini/lvgl/src/misc/cache/lv_cache.h \
+ .pio/libdeps/lolin_c3_mini/lvgl/src/misc/cache/../lv_types.h \
+ .pio/libdeps/lolin_c3_mini/lvgl/src/misc/cache/../../lv_conf_internal.h \
+ .pio/libdeps/lolin_c3_mini/lvgl/src/misc/cache/../../lv_conf_kconfig.h \
+ C:/Users/jorge/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32c3/qio_qspi/include/sdkconfig.h \
+ C:/Users/jorge/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32c3/include/esp_common/include/esp_attr.h \
+ C:/esp32-c3-mini/include/lv_conf.h \
+ .pio/libdeps/lolin_c3_mini/lvgl/src/misc/cache/lv_cache_entry.h \
+ .pio/libdeps/lolin_c3_mini/lvgl/src/misc/cache/class/lv_cache_class.h \
+ .pio/libdeps/lolin_c3_mini/lvgl/src/misc/cache/class/lv_cache_lru_rb.h \
+ .pio/libdeps/lolin_c3_mini/lvgl/src/misc/cache/class/../lv_cache_private.h \
+ c:\esp32-c3-mini\.pio\libdeps\lolin_c3_mini\lvgl\src\misc\lv_types.h \
+ c:\esp32-c3-mini\.pio\libdeps\lolin_c3_mini\lvgl\src\osal\lv_os.h \
+ c:\esp32-c3-mini\.pio\libdeps\lolin_c3_mini\lvgl\src\lv_conf_internal.h \
+ c:\esp32-c3-mini\.pio\libdeps\lolin_c3_mini\lvgl\src\misc\lv_types.h \
+ c:\esp32-c3-mini\.pio\libdeps\lolin_c3_mini\lvgl\src\osal\lv_os_none.h \
+ .pio/libdeps/lolin_c3_mini/lvgl/src/misc/cache/class/lv_cache_lru_ll.h \
+ .pio/libdeps/lolin_c3_mini/lvgl/src/misc/cache/instance/lv_cache_instance.h \
+ .pio/libdeps/lolin_c3_mini/lvgl/src/misc/cache/instance/lv_image_header_cache.h \
+ c:\esp32-c3-mini\.pio\libdeps\lolin_c3_mini\lvgl\src\misc\lv_types.h \
+ .pio/libdeps/lolin_c3_mini/lvgl/src/misc/cache/instance/lv_image_cache.h \
+ .pio/libdeps/lolin_c3_mini/lvgl/src/misc/cache/../../stdlib/lv_sprintf.h \
+ c:\esp32-c3-mini\.pio\libdeps\lolin_c3_mini\lvgl\src\misc\lv_types.h \
+ .pio/libdeps/lolin_c3_mini/lvgl/src/misc/cache/../lv_assert.h \
+ .pio/libdeps/lolin_c3_mini/lvgl/src/misc/cache/../lv_log.h \
+ .pio/libdeps/lolin_c3_mini/lvgl/src/misc/cache/../lv_types.h \
+ .pio/libdeps/lolin_c3_mini/lvgl/src/misc/cache/../../stdlib/lv_mem.h \
+ c:\esp32-c3-mini\.pio\libdeps\lolin_c3_mini\lvgl\src\lv_conf_internal.h \
+ .pio/libdeps/lolin_c3_mini/lvgl/src/misc/cache/../../stdlib/lv_string.h \
+ .pio/libdeps/lolin_c3_mini/lvgl/src/misc/cache/lv_cache_entry_private.h \
+ .pio/libdeps/lolin_c3_mini/lvgl/src/misc/cache/../../osal/lv_os.h \
+ .pio/libdeps/lolin_c3_mini/lvgl/src/misc/cache/../lv_profiler.h \
+ .pio/libdeps/lolin_c3_mini/lvgl/src/misc/cache/lv_cache_private.h

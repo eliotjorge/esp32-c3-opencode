@@ -1,0 +1,10 @@
+{
+    "lolin_c3_mini": {
+        "id": "lolin_c3_mini",
+        "name": "ESP32-C3 LVGL 1.28 240x240",
+        "file": "lolin_c3_mini_v6.3_0x0.bin",
+        "address": "0x0",
+        "size": 3465552,
+        "chip": "esp32c3"
+    }
+}

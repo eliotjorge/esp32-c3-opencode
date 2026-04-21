@@ -1,0 +1,85 @@
+[33m76e1083[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m Código de OpenCode corregido
+[33mf566ac2[m[33m ([m[1;31mnuevo/main[m[33m)[m Código de OpenCode
+[33md671c20[m Cambiado entorno platformio.ini, añadido logo de splash y overlay con "Shift!"
+[33m5f9f029[m v6.3
+[33mb25a5dc[m Merge branch 'main' of https://github.com/fbiego/esp32-c3-mini
+[33m339ed57[m update script
+[33mf8e43f6[m v6.2
+[33m756140f[m add build script
+[33m18f0d8a[m Merge pull request #43 from fbiego/elecrow_s3
+[33mb5c8dd3[m remove hardware build files
+[33m4818aa8[m add elecrow s3 & cyd boards
+[33m0cce936[m Merge pull request #42 from ANTPro/main
+[33m5108deb[m Revert ESPS3_1_69 pins
+[33m66873a1[m Feature/add support for esp32 s3 touch amoled 2.06
+[33m2e8773a[m Merge pull request #36 from kolioDev/feature/add_support_for_ESP32-S3-Touch-AMOLED-1.75
+[33m2f87118[m [feature] fix code format
+[33m7973b21[m [feature] revert accidenal change
+[33m55c0cde[m [cleanup] revert acidental change
+[33m6b0d736[m [feature] Update readme
+[33m1420e90[m [feature] Add support for ESP32-S3-Touch-AMOLED-1.75
+[33m07e8b48[m update lvgl version, use exact library versions
+[33md6a7992[m Update README.md
+[33m356adc0[m Update Viewe  SmartRing link
+[33m3be79ff[m added software rotation
+[33m94a1ca5[m add viewe knob display
+[33ma83bdeb[m add 466 radar watchface
+[33m56655e0[m add 466 watchface
+[33mf3ef7ad[m add viewe smartring
+[33m2f8598c[m add alert type settings
+[33md9bbab9[m update lvgl api v8
+[33m26192e1[m v6.0
+[33m6eb8a61[m updates
+[33m7955dc1[m add m5 stack dial
+[33m36eabdb[m add linux
+[33m194dd93[m add waveshare pico boards
+[33mb555759[m update scripts
+[33m94c92c8[m updates
+[33mf045f71[m v5.1
+[33mc112510[m 5.0.1
+[33m23de033[m Merge pull request #13 from fbiego/lvgl_9
+[33m07e6e8a[m v5.0
+[33mc6b8660[m update
+[33m1a765d6[m v4.1.0
+[33me521305[m Update boards.png
+[33m7244a69[m initial elecrow c3 support
+[33m0d24993[m Update README.md
+[33mdfc427e[m v4.0.1
+[33mb5a1ec7[m Update README.md
+[33md9bb578[m update
+[33m9c044cd[m fix #8
+[33ma4f72cd[m Update README.md
+[33m8f7229a[m custom watchface
+[33mccbf119[m Create FUNDING.yml
+[33m81cbb22[m Merge pull request #6 from davidakerr/update-ui-defs
+[33md5154b3[m include missing face includes
+[33m3aad4c7[m surround faces init and update with enable pragmas
+[33mb3199a9[m Merge pull request #5 from davidakerr/mac-config-update
+[33m79b6823[m Add missing function declarations
+[33me7c05cb[m MacOS SDL2 config update
+[33ma71b618[m Update README.md
+[33mff13de9[m add watchfaces
+[33mebb473d[m refactor
+[33m10e4fcf[m add board
+[33m9ac5379[m update library
+[33m9c27334[m update
+[33me0162a1[m - updates
+[33mfc2dca5[m test mac
+[33mb83ae64[m updates
+[33m150c46c[m update
+[33m2dbc15f[m add multiple watchfaces
+[33md9d818f[m bug fix
+[33m2b9085d[m update
+[33mf4f0107[m update code
+[33me85cc0d[m update
+[33m0e01686[m fix some bugs
+[33ma681de5[m Update README.md
+[33m3105ac8[m Update README.md
+[33m5567e6e[m Update README.md
+[33m559f223[m add configuration image
+[33mfa42143[m Update README.md
+[33m7c36ebf[m Update README.md
+[33m448eca4[m add images
+[33m7a2b7f7[m Create README.md
+[33m94f3aeb[m update code
+[33m97bd889[m initial commit

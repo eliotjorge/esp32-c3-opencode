@@ -1,0 +1,81 @@
+name: Build ESP32-C3-MINI Firmware
+
+on:
+  push:
+    branches: [ main, master ]
+    paths:
+      - 'src/**'
+      - 'hal/**'
+      - 'include/**'
+      - 'lib/**'
+      - 'platformio.ini'
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+        
+    - name: Install PlatformIO
+      run: |
+        pip install --upgrade pip
+        pip install platformio
+        
+    - name: Cache PlatformIO
+      uses: actions/cache@v4
+      with:
+        path: |
+          ~/.cache/pip
+          ~/.platformio
+        key: ${{ runner.os }}-pio-${{ hashFiles('platformio.ini') }}
+        restore-keys: |
+          ${{ runner.os }}-pio-
+          
+    - name: Build firmware
+      run: pio run -e lolin_c3_mini
+      
+    - name: Upload firmware artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: firmware
+        path: .pio/build/lolin_c3_mini/firmware.bin
+        
+    - name: Upload partition table
+      uses: actions/upload-artifact@v4
+      with:
+        name: partitions
+        path: .pio/build/lolin_c3_mini/partitions.bin
+
+  build-all:
+    runs-on: ubuntu-latest
+    needs: build
+    if: github.event_name == 'pull_request'
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+        
+    - name: Install PlatformIO
+      run: |
+        pip install --upgrade pip
+        pip install platformio
+        
+    - name: Build all variants
+      run: |
+        pio run -e lolin_c3_mini
+        echo "Build completed for all variants"

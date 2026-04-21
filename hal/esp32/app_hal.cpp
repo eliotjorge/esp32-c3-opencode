@@ -42,6 +42,7 @@
 
 #include <lvgl.h>
 #include "ui/ui.h"
+#include "ui/ui_car.h"
 
 #include "ui/custom_face.h"
 #include "common/api.h"
@@ -116,7 +117,11 @@ static const uint32_t screenHeight = SCREEN_HEIGHT;
 
 
 /*MIO*/
+#ifndef ROUND_DISPLAY
 #define RPM_PIN 20
+#else
+#define RPM_PIN 8
+#endif
 
 static volatile uint32_t rpmPulseCount = 0;
 static volatile uint32_t lastRpmPulseMs = 0;
@@ -2188,14 +2193,17 @@ void hal_setup()
 
   ui_init(); // Inicialica UI
 
-
   /*MIO*/
+  #ifdef ROUND_DISPLAY
+  ui_car_screen_init();
+  #else
   pinMode(RPM_PIN, INPUT_PULLUP);
   attachInterrupt(digitalPinToInterrupt(RPM_PIN), rpmISR, FALLING);
   calculateRpmLevels();
   createShiftOverlay();
   createLedBar(ui_clockScreen);
   runLedTestAnimation();
+  #endif
   /*MIO*/
 
 

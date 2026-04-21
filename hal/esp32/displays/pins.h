@@ -109,6 +109,7 @@
 #define OFFSET_X 0
 #define OFFSET_Y 0
 #define RGB_ORDER false
+#define ROUND_DISPLAY 1
 
 // touch
 #define I2C_SDA 4
@@ -129,6 +130,10 @@
 #define BL 3
 
 #define BUZZER_PIN -1
+
+#define RPM_PIN 8
+#define TX_PIN 21
+#define RX_PIN 20
 
 #define MAX_FILE_OPEN 10
 
